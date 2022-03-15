@@ -1,0 +1,79 @@
+
+
+.controlVista{
+    font-style: oblique;
+    font-family: monospace;
+    font-size: x-large;
+}
+.btnSup{
+    background:linear-gradient(to left,rgb(12, 12, 12),rgb(240, 183, 183)) ;
+    border-radius: 5px;
+    margin: 5px;
+    text-align: center;
+    font-family: monospace;
+    font-style: oblique;
+    font-size: x-large;
+    color: rgb(8, 0, 0);
+    text-shadow:1px 1px rgb(240, 183, 183);
+
+}
+
+.Formulario{
+    display: flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    width: 900px;
+    justify-items: center;
+    
+    justify-content: center;
+    
+    padding: 10px;
+    font-family: monospace;
+    font-size: larger;
+    font-style: oblique;
+    font-weight: bolder;
+    text-align: center;
+
+}
+
+.procesar{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    text-align: center;
+     background-image: url('../imagenes/mapa.jpg'); 
+    justify-content: center;
+    margin: 50px;
+    padding: 15px;
+    border-radius: 5px;
+    border: 10px;
+    border-width: 2px;
+    border-style:solid;
+    border-spacing: 2px;
+    box-shadow: 5px 5px rgb(19, 7, 7);
+    font-family: monospace;
+    font-style: oblique;
+    font-weight:bold;
+    font-size: larger;
+}
+
+
+
+.btn{
+        border-radius: 5px;
+        font-family: monospace;
+        font-size: medium;
+        background: linear-gradient(to left,white,rgb(81, 94, 94),white);
+        padding: 5px;
+        margin: 5px;
+        font-weight: bolder;
+    }
+
+.inputselect{
+        margin: 5px;
+        border-radius: 5px;
+        font-family: monospace;
+        font-size: medium;
+        font-weight: bolder;
+        
+    }

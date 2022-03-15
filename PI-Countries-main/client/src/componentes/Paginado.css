@@ -1,0 +1,28 @@
+.paginado{
+    font-family: monospace;
+    font-size: x-large;
+   
+    margin-top: 1px;
+}
+.botonespaginado{
+    /* background-color: rgb(100, 100, 202); */
+    background:linear-gradient(to left, rgb(123, 26, 179),rgb(100, 100, 202));
+    font-family: monospace;
+    color:black;
+    
+    border-radius: 10px;
+    padding: 5px;
+    justify-items: center;
+    display: flex;
+    flex-direction: row;
+    margin-right: 2px;
+    margin-left: 2px;
+    opacity: 90%;
+   
+}
+
+.contenedorbotones{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}

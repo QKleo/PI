@@ -1,0 +1,29 @@
+
+
+.homeVistaBanderas{
+    
+   
+    
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    text-align: center;
+    justify-content: center;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 2px;
+    margin-top: 5px;
+   
+    padding: 10px;
+
+}
+
+.btn{
+    border-radius: 5px;
+    font-family: monospace;
+    font-size: medium;
+    background: linear-gradient(to left,white,rgb(81, 94, 94),white);
+    padding: 5px;
+    margin: 5px;
+    font-weight: bolder;
+}

@@ -1,0 +1,16 @@
+.btn{
+    border-radius: 5px;
+    font-family: monospace;
+    font-size: medium;
+    background: linear-gradient(to left,white,rgb(81, 94, 94),white);
+    padding: 5px;
+    margin: 5px;
+    font-weight: bolder;
+}
+.inputs{
+    border-radius: 5px;
+    font-family: monospace;
+    font-size: medium;
+    font-weight: bolder;
+
+}
