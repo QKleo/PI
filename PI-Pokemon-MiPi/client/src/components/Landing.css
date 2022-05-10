@@ -1,0 +1,10 @@
+.fondolanding{
+    align-items: center;
+    background-image: url('../presentacion.png') ;
+    color:transparent;
+    background-repeat:no-repeat;
+    background-position: center;
+    height: 400px;
+    width: 100%;
+    opacity: 50%;
+}
