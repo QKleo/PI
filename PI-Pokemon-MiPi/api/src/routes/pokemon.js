@@ -5,11 +5,16 @@ const {Pokemons ,Types,Nombres}=require('../db.js');
 
 
 
-router.get('/',(req,res,next)=>{
-    Nombres.findAll({
+router.get('/',async(req,res,next)=>{
+    try{
+    let nombresApi= await Nombres.findAll({
         attributes:['name','id']
     })
-    .then((r)=>{return res.send(r).end()})
-    .catch(()=>next())
+    
+    let nombresBd=await Pokemons.findAll({attributes:['name','id']})
+    res.send([...nombresApi,...nombresBd]).end() 
+    }
+    catch(err){next()}
+    
 })
 module.exports=router

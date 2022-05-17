@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { obtenerPorId } from "../redux/actions"
+//import { obtenerPorId } from "../redux/actions"
 import { asignarPokemon } from "../redux/actions"
 import { agregarAProyecto } from "../redux/actions"
 import './Cards.css'

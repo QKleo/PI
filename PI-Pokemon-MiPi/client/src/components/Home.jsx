@@ -34,20 +34,22 @@ export default function Home(){
     useEffect(()=>setpaginado(0),[dispatch])
     
 //---------------------------------------------------------------------
-    const end=paginado*elementosMostrar+elementosMostrar
+    let end=paginado*elementosMostrar+elementosMostrar
 
 
     if (auxPokemons.length===0 && Pokemons.length>0){
         maxi=Math.floor(Pokemons.length/elementosMostrar)
             
-        PokemonsMostrar=Pokemons.slice(paginado*elementosMostrar,end)}
+        PokemonsMostrar=Pokemons.slice(paginado*elementosMostrar,end)
+        
+    }
 
     if(auxPokemons.length>0 && Pokemons.length>0){
-         maxi=Math.floor(auxPokemons.length/elementosMostrar)
+        maxi=Math.floor(auxPokemons.length/elementosMostrar)
         PokemonsMostrar=auxPokemons.slice(paginado*elementosMostrar,end)
         
         }
-   
+    
    
 
     if(paginado<0){setpaginado(0)}
@@ -103,7 +105,7 @@ export default function Home(){
             
             <div className="homeVista" > 
 
-                {PokemonsMostrar.length===0&&<h4 className="white">..espere... </h4>}
+                {PokemonsMostrar.length===0&&Allpokemons.length===0&&<h4 className="white">..espere... </h4>}
                 <Suspense fallback={<h4  className="white">cargando...</h4>}> 
                     {Pokemons.length>0&&PokemonsMostrar.map(e=>
                 

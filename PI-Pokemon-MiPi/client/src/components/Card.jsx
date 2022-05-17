@@ -5,16 +5,18 @@ import './Card.css'
 import imagen from '../pokemon.png';
 import { eliminarPokemonDb,actualizarDespuesDeEliminar } from "../redux/actions";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+
+import pokebolaRota from '../pokebola2.png'
+
 export default function Card(){
 
     const Pokemon=useSelector(state=>state.Pokemon)
     const Allpokemons=useSelector(state=>state.Allpokemons)
     const dispatch=useDispatch()
    // console.log(Pokemon)
-   function handleOnclick(){
+   
 
-   }
+   
     return(
         <div>
                
@@ -23,7 +25,8 @@ export default function Card(){
                 <div className="giro">
                     <div  className="giro-interno"  >
                         <div className="giro-frontal">
-                            <img src={Pokemon.image?Pokemon.image:imagen} width='300px' alt="" />
+                            <img src={Pokemon.image?Pokemon.image:
+                                Pokemon.name?imagen:pokebolaRota} width='300px'height='300px' alt="" />
                             <br />
                         </div>
                         <div className="giro-detras" style={{textAlign:'left'}}>
@@ -47,12 +50,14 @@ export default function Card(){
             </div>
             {Pokemon.createInDatabase&&
                     <div>
-                        <Link to='/pokemons'>
+                        {/* <Link to='/pokemons'> */}
                             <button className="btn" onClick={()=>{
-                            dispatch(eliminarPokemonDb(Pokemon.id));
-                            dispatch(actualizarDespuesDeEliminar(Allpokemons))
-                            }}>Eliminar</button>
-                        </Link>
+                                dispatch(eliminarPokemonDb(Pokemon.id));
+                                dispatch(actualizarDespuesDeEliminar(Allpokemons))
+                                
+                                    }}>Eliminar
+                            </button>
+                        {/* </Link> */}
                         <Link to='/formulario'>
                             <button className="btn">Actualizar</button>
                         </Link>

@@ -1,6 +1,5 @@
-import { limpiarAuxPokemons, limpiarPokemons, ordenarAlfabeticamente } from "../redux/actions"
+import {  ordenarAlfabeticamente } from "../redux/actions"
 import { useDispatch } from "react-redux"
-import { useSelector } from "react-redux"
 import { ordenarNumero } from "../redux/actions"
 
 export default function Ordenar(props){

@@ -26,11 +26,12 @@ export const ACTUALIZARPOKEMON='ACTUALIZARPOKEMON'
 export const LIMPIARPOKEMON='LIMPIARPOKEMON'
 export const TYPESPOSIBLES='TYPESPOSIBLES'
 export const LIMIARPOSIBLES='LIMIARPOSIBLES'
+export const INVALIDA="INVALIDA"
 
 export function obtenerTodos(arrObj=[],value){
-    console.log('estoy')
+   // console.log('estoy')
     if(arrObj.length>0 && value){
-        console.log('paso')
+      //  console.log('paso')
        // let aux=[]
         return (dispatch)=>{
            let aux=arrObj.filter((e)=>e.name.toLowerCase().match(value.toLowerCase()))
@@ -310,9 +311,9 @@ export function actualizarDespuesDeEliminar(arrObj){
         let api=arrObj.filter(e=>e.createInDatabase===false)
         let bd=await axios.get('http://localhost:3001/pokemonsdb')
         bd=bd.data
-        console.log(api)
-        console.log(bd)
-        console.log([...api,...bd])
+       // console.log(api)
+       // console.log(bd)
+       // console.log([...api,...bd])
         return dispatch({
             type:ACTUALIZARDESPUESDEELIMINAR,
             payload:[...api,...bd]
@@ -331,7 +332,7 @@ export function actualizarPokemon(arrObj,id,payload){
             axios.get('http://localhost:3001/pokemonsdb')
             .then((r)=>{return r.data})
             .then((r)=>{
-                console.log('cambios....')
+              //  console.log('cambios....')
                 return dispatch({
                 type:ACTUALIZARPOKEMON,
                 payload:[...api,...r]
@@ -372,6 +373,14 @@ export function limpiarPosibles(){
         return dispatch({
             type:LIMIARPOSIBLES,
             payload:''
+        })
+    }
+}
+export function invalida(){
+    return(disptach)=>{
+        return disptach({
+            type:INVALIDA,
+            payload:['operacion invalida']
         })
     }
 }

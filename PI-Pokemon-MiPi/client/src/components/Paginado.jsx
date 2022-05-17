@@ -13,6 +13,7 @@ export default function Paginado(props){
     for(let i=1;i<=props.max+1;i++){
         aux.push(i)
     }
+    //console.log(props.max)
    
 
     return( 

@@ -2,9 +2,9 @@
 import { Link } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
-import { actualizarDespuesDeEliminar, actualizarPokemon, CrearPkemons, limpiarAuxPokemons, obtenerTypes } from "../redux/actions"
+import { actualizarDespuesDeEliminar, actualizarPokemon, CrearPkemons,obtenerTodosNamesDb, limpiarAuxPokemons, obtenerTypes } from "../redux/actions"
 import { useSelector } from "react-redux"
-import { actualizarDespuesDeCrear,limpiarRespuesta,limpiarPokemons,limpiarPokemon,obtenerTodos } from "../redux/actions"
+import { actualizarDespuesDeCrear,limpiarRespuesta,invalida,limpiarPokemons,limpiarPokemon,obtenerTodos } from "../redux/actions"
 import { refrescar } from "../redux/actions"
 
 export default function Forms(){
@@ -14,11 +14,13 @@ const Types=useSelector(state=>state.Types)
 const All=useSelector(state=>state.Allpokemons)
 const Respuesta=useSelector(state=>state.Respuesta)
 const Pokemon=useSelector(state=>state.Pokemon)
+const Names=useSelector(state=>state.Names)
 
-//console.log(actualizar)
+let namesEstan=Names.length>0&&Names.map(e=>e.name)
+//console.log(namesEstan)
 //console.log(Pokemon)
 const objetoMostrar={}
-const[validar,setvalidar]=useState('mostraFalse')
+const[validar,setvalidar]=useState(false)
 const[local,setlocal]=useState({
 
     name:Pokemon.name?Pokemon.name:'',
@@ -29,13 +31,17 @@ const[local,setlocal]=useState({
     height:Pokemon.height?Pokemon.height.toString():'',
     weight:Pokemon.weight?Pokemon.weight.toString():'',
     types:Pokemon.types?Pokemon.types.map(e=>`${e.id}`):[],
-    actualizar:Pokemon.name?true:false
+    actualizar:Pokemon.name?true:false,
+    nameInicial:Pokemon.name?Pokemon.name:''
    // respuesta:Respuesta[0]
 
 
 }) 
+
+   
     //console.log(Pokemon.types)
-   // useEffect(()=>{dispatch(obtenerTypes())},[Respuesta.length])
+    useEffect(()=>{controlRepetido(local.name)},[local.name])
+    useEffect(()=>{ dispatch(obtenerTodosNamesDb())},[All.length])
 
     function validarNumero(str,len){
         if(str.length>len){return false}
@@ -48,7 +54,7 @@ const[local,setlocal]=useState({
     
          if(str.length>len){return false}
     
-            str=str.split(' ').join('')
+            str=str.split('-').join('')
             let primero=/\W/.test(str)
             let segundo=/\d/.test(str)
             return !primero && !segundo 
@@ -57,23 +63,31 @@ const[local,setlocal]=useState({
     function validarTypes(arr,value){
         if(local.actualizar){
            arr=arr.map(e=>{return e})
-           console.log(arr)
+         //  console.log(arr)
         }
       //  console.log(value,'aqui')
       //  console.log(local.types)
         return !arr.includes(value)
+    }
+    function controlRepetido(str){
+        if(local.actualizar){
+            namesEstan=namesEstan.length>0&&namesEstan.filter(e=>e!==local.nameInicial)
+        }
+  
+        if(namesEstan.includes(str)){setvalidar(true)}
+        else{setvalidar(false)}
     }
 
     function handleOnChange(e){
         e.preventDefault(e)
         const{name,value}=e.target
         
-    //  name==='temperaments'&&setforms({...forms,[name]:validarTemperament(forms[name],value)?
-            //[value,...forms[name]]:forms[name]})
+        name==='name'&&setlocal({...local,[name]:validarCadena(value,25)?value.toLowerCase():local.name})
+     
         name==='types'&&setlocal({...local,[name]:validarTypes(local[name],value)?
             [value,...local[name]]:local[name] })
               //  console.log(local.types)
-        name==='name'&&setlocal({...local,[name]:validarCadena(value,25)?value.toLowerCase():local[name].length>0?local[name].toLowerCase().slice(1):''})
+        
         
         name==='hp'&&setlocal({...local,[name]:validarNumero(value,4)?value:local[name].length>0?local[name].slice(1):''})
         name==='defense'&&setlocal({...local,[name]:validarNumero(value,4)?value:local[name].length>0?local[name].slice(1):''})
@@ -90,43 +104,44 @@ const[local,setlocal]=useState({
         if(local.name.length>0&&local.attack.length>0&&local.defense.length>0&&
             local.speed.length>0&&local.weight.length>0&&local.hp.length>0&&local.height.length>0
             ){
-                if(local.actualizar){
+                if(local.actualizar&&!validar){
                   //  dispatch(actualizarPokemon(Pokemon.id,local))
-                    setlocal({...local,['types']:local.types})
+                   // setlocal({...local,['types']:local.types})
                     console.log(local.types)
                     actualizarDespuesActualizar()
                     limpiarFormulario()
                   //  dispatch(obtenerTodos())
 
-                    
-
                 }else{
-                
-                setvalidar('mostraTrue')
-                dispatch(CrearPkemons(local))
-                actualizarDespues()
-                limpiarFormulario()
+                if(!validar){
+               // setvalidar('mostraTrue')
+                    
+                    dispatch(CrearPkemons(local))
+                    actualizarDespues()
+                    limpiarFormulario()
+                    
+                    }else{dispatch(invalida())}
                 }
-        
-            }else{
-            setvalidar('mostraFalse')
+            }
+            else{
+                dispatch(invalida())
+            }
         }
-        
-    }
     function actualizarDespues(){
 
         dispatch(actualizarDespuesDeCrear(local.name))
-        dispatch(refrescar(All))
+       // dispatch(refrescar(All))
         //console.log(All)
 
     }
     function actualizarDespuesActualizar(){
+        
         dispatch(actualizarPokemon(All,Pokemon.id,local))
         dispatch(refrescar(All))
     }
 
     function limpiarFormulario(){
-        setvalidar('mostraFalse')
+       // setvalidar('mostraFalse')
         setlocal({
             name:'',
             hp:'',
@@ -160,9 +175,14 @@ const[local,setlocal]=useState({
             <label className='btn'htmlFor="">nombre </label>
             <input className='btn' type="text" placeholder={Pokemon.name?Pokemon.name:"nombre"} 
                 value={local.name}name="name" onChange={(e)=>handleOnChange(e)}/>
-                <span className='btn'>
+
+                {!validar&&<span className='btn'>
                     {!local.name?'invalido':'ok'}
-                </span>    
+                    
+                </span>}
+                {validar&&<span className="btn">
+                    ya existe
+                </span>}    
             </div>
             <div>
             <label className='btn'  htmlFor="">{". "+". "+"hp "}</label>
@@ -231,8 +251,7 @@ const[local,setlocal]=useState({
             onClick={(e)=>handleOnClick(e)}
             >{local.actualizar?'actualizar':'enviar'}</button>
         <br/>    
-        {validar==='mostraTrue'&&`creando pokemon`}
-        {validar==='mostraFalse'&&'Completar campos'}
+       
        
 
         </form>

@@ -114,7 +114,7 @@ router.get('/',(req,res,next)=>{
 router.get('/:id',(req,res,next)=>{
     const {id}=req.params
     axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
-    .then((info)=>{return res.send(
+    .then((info)=>{return res.status(200).send(
         {
             id:info.data.id,
             name:info.data.name,
@@ -140,11 +140,11 @@ router.get('/:id',(req,res,next)=>{
                 where:{id:id}
                 })
                .then((r)=>{
-                   if(r.length>0){return res.send(r)}  
+                   if(r.length>0){return res.status(200).send(r)}  
            
                //return res.send({msg:'nono'}).end()
                })
-               .catch(()=>{return res.send({msg:'nono'}).end()})
+               .catch(()=>{return res.status(404).send({msg:'nono'}).end()})
             
         
     })

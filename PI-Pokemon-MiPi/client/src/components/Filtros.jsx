@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux"
 
 import { useSelector } from "react-redux"
 import { useEffect, useState } from "react"
-import { filtrarTipo,obtenerTodos,obtenerTodosNamesDb,
+import { filtrarTipo,obtenerTodos,
     limpiarPosibles,typesPosibles, limpiarAuxPokemons } from "../redux/actions"
 
 export default function Filtros(props){
@@ -28,15 +28,23 @@ export default function Filtros(props){
     if(valores.nombre.length===0){
         namesMostra=Names
     }
-
+    function control(str){
+        str=str.split('-').join('')
+        let primero=/\W/.test(str)
+       
+        return !parseInt(str*1)&&!primero
+    }
+            
+        
+    
 
     function handleOnChange(e){
         e.preventDefault(e)
         const{name,value}=e.target
-        if(name==='nombre'){setvalores({['nombre']:value})}
-        if(name==='names'){setvalores({['nombre']:value})}
-        if(name==='Types'){setvalores({['Types']:value,['names']:'',['nombre']:''})}
-        if(name==='posibles'){setvalores({['nombre']:value})}
+        name==='nombre'&&setvalores({['nombre']:control(value)?value:valores.nombre})
+        name==='names'&&setvalores({['nombre']:value})
+        name==='Types'&&setvalores({['Types']:value,['names']:'',['nombre']:''})
+        name==='posibles'&&setvalores({['nombre']:value})
             
         
     }
@@ -44,7 +52,8 @@ export default function Filtros(props){
     function handleOnClick(e){
         e.preventDefault(e)
         if(Pokemons.length===1&&Pokemons[0].name==='no hay match'){
-            return<h4 className="white">no hay</h4>
+           // return<h4 className="white">no hay</h4>
+           console.log('no hay match')
         }else{
             dispatch(filtrarTipo(Pokemons,valores.Types))
 
@@ -91,7 +100,7 @@ export default function Filtros(props){
                     onClick={(e)=>{
                         handleOnClick(e)
                     }}>
-                    Por tipo
+                    Filtrar por tipo
                 </button>
                 <div>
                     <label htmlFor="" className="btn">su seleccion:{valores.Types?valores.Types:
@@ -100,7 +109,7 @@ export default function Filtros(props){
                 <div>
                     <select name='posibles' className="btn" value=''id=""
                         onChange={(e)=>handleOnChange(e)}>
-                        <option value="">posibles</option>
+                        <option value="">Pokemones posibles por type</option>
                         {Posibles.length>0&&Posibles.map((e,i)=>{
                         return <option key={i} value={e}>{e}</option>
                     })}
@@ -134,7 +143,7 @@ export default function Filtros(props){
             <div>
                 <select className='btn' style={{position:'static',marginLeft:'5px'}}value=''
                         name="names" id="" onChange={(e)=>handleOnChange(e)} >
-                        <option>seleccione nombre</option>
+                        <option>seleccione nombre pokemon api/bd</option>
                         {Names.length>0&&namesMostra.map(e=>{
                         return <option key={e.id}> {e.name}</option>}
                   
@@ -142,7 +151,7 @@ export default function Filtros(props){
                 </select>
                 <span>
                   <input readOnly
-                     className="btn" style={{position:'static'}}value={`nombres de Api:${namesMostra.length}`}/>
+                     className="btn" style={{position:'static'}}value={`nombres en Proy:${namesMostra.length}`}/>
                 </span>
             </div>
            

@@ -3,7 +3,7 @@ import { ACTUALIZARDESPUESDECREAR, APIDB, ASIGNARPOKEMON, CREARPOKEMONS,
      OBTENERTODOS, OBTENERTYPES, ODENARALFABETICAMENTE ,ORDENARALFABETICAMENTEAUX, 
      ORDENARNUMERO, ORDENARNUMEROAUX, REFRESCAR,OBTENERPORNOMBRE,NAMES, AGREGARAPROYECTO,
      LIMPIARRESPUESTA,LIMPIARPOKEMON,
-     ACTUALIZARDESPUESDEELIMINAR,ACTUALIZARPOKEMON, TYPESPOSIBLES,LIMIARPOSIBLES
+     ACTUALIZARDESPUESDEELIMINAR,ACTUALIZARPOKEMON, TYPESPOSIBLES,LIMIARPOSIBLES,INVALIDA
 } from "./actions"
 const initialState={
     Allpokemons:[],
@@ -82,7 +82,7 @@ export default function rootReducer(state=initialState,actions){
                 auxPokemons:actions.payload
             } 
         case CREARPOKEMONS:
-            console.log('respuesta')
+           // console.log('respuesta')
             return{
                 ...state,
                 Respuesta:actions.payload
@@ -110,12 +110,12 @@ export default function rootReducer(state=initialState,actions){
                 Pokemon:actions.payload
             }
         case OBTENERPORNOMBRE:
-            console.log(actions.payload)
+           // console.log(actions.payload)
             return{
                 ...state,
                // Allpokemons:actions.payload,
-                auxPokemons:actions.payload
-              //  Pokemons:actions.payload
+                auxPokemons:actions.payload,
+                Pokemons:actions.payload
             }
         case NAMES:
             return{
@@ -128,13 +128,14 @@ export default function rootReducer(state=initialState,actions){
                 Allpokemons:actions.payload
             }
         case ACTUALIZARDESPUESDEELIMINAR:
-            console.log(actions.payload)
+           // console.log(actions.payload)
             return{
                 ...state,
                 Allpokemons:actions.payload,
                 Pokemons:actions.payload,
                 auxPokemons:[],
-                Pokemon:{}
+                Pokemon:{},
+                Respuesta:['Pokemon eliminado']
             }
         case LIMPIARPOKEMON:
             return{
@@ -142,7 +143,8 @@ export default function rootReducer(state=initialState,actions){
                 Pokemon:actions.payload
             }
         case ACTUALIZARPOKEMON:
-            console.log('....actualizando')
+          //  console.log('....actualizando')
+          //  console.log(actions.payload)
             return{
                 ...state,
                 Allpokemons:actions.payload,
@@ -161,6 +163,11 @@ export default function rootReducer(state=initialState,actions){
             return{
                 ...state,
                 Posibles:actions.payload
+            }
+        case INVALIDA:
+            return{
+                ...state,
+                Respuesta:actions.payload
             }
         default:
             return state
