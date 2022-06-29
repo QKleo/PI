@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       
       <BrowserRouter>
-      <h1>Henry Pokemon</h1>
+     
        <Routes>
           <Route exact path='/' element={<Landing/>}/>
           <Route exact path='/pokemons'element={<Home/>}/> 

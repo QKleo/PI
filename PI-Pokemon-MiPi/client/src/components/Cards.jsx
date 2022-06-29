@@ -13,10 +13,10 @@ export default function Cards(props){
     return(
         <div className="pokemon">
             <div className="unidad">
-                <h4>name :{props.name}</h4>
+                <h4 className="textocard">name {props.name}</h4>
                 {props.name!=="no hay match"?
                 <Link to='/detail'>
-                    <button 
+                    <button style={{borderRadius:'10px'}}
                         onClick={()=>{dispatch(asignarPokemon(props.pokemon))}}  >
                         <img src={props.image} alt="" width='100' height='100'/>
                   </button>

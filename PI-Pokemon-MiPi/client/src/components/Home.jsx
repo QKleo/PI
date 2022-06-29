@@ -77,19 +77,21 @@ export default function Home(){
     return(
 
         <div>
+            <div style={{padding:'0px'}} >
              <Filtros cambiar={cambiar}  auxPokemons={auxPokemons} Pokemons={Pokemons}
                 elementosMostrar={elementosMostrar} Allpokemons={Allpokemons} /> 
-           
+            </div>
             
-            <div>
+            <div style={{padding:'0px'}}>
          
-            <h4>Total pokemons{auxPokemons.length>0?
+            {/* <h5 style={{padding:'0px'}}>Total pokemons{auxPokemons.length>0?
                 auxPokemons.length===1?auxPokemons[0].name==='no hay match'&&'0':auxPokemons.length
                 :Pokemons.length===1?Pokemons[0].name==='no hay match'&&'0':Pokemons.length} 
-            </h4>    
+            </h5>     */}
             
-               
+               <div style={{padding:'0px'}}>
                 <Ordenar arrObj={Pokemons} arrObjaux={auxPokemons}/>
+                </div>
             </div>
            
             <div>
@@ -97,16 +99,17 @@ export default function Home(){
                  auxPokemons={auxPokemons} elementosMostrar={elementosMostrar}/> 
             </div>
            
-            <button className='btn'onClick={(e)=>todos(e)}>Refrescar</button>
+            <button className='btn'style={{padding:'0px'}}onClick={(e)=>todos(e)}>Refrescar</button>
 
             <Link to='/formulario'>
-                <button className='btn'>Crear un Pokemon</button>
+                <button className='btn'style={{padding:'0px'}}>Crear un Pokemon</button>
             </Link>
             
             <div className="homeVista" > 
-
+           
                 {PokemonsMostrar.length===0&&Allpokemons.length===0&&<h4 className="white">..espere... </h4>}
-                <Suspense fallback={<h4  className="white">cargando...</h4>}> 
+                <Suspense fallback={()=>{ setTimeout(8000);<h4  className="white">cargando...</h4>}}>
+                   
                     {Pokemons.length>0&&PokemonsMostrar.map(e=>
                 
                     <div key={PokemonsMostrar.indexOf(e)} >

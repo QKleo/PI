@@ -1,12 +1,13 @@
 
-
+import { useSelector } from "react-redux"
 
 export default function Paginado(props){
+    let auxPokemons=useSelector(state=>state.auxPokemons)
+    let Pokemons=useSelector(state=>state.Pokemons)
+    
     let aux=[]
    // let num=props.max
-   //if(props.auxPokemons.length>0){props.setmax(Math.floor(props.auxPokemons.length/props.elementosMostrar))
-    
-//}
+ 
    
    
     
@@ -30,7 +31,11 @@ export default function Paginado(props){
             <button className='btn'onClick={()=>props.setpaginado(props.paginado+1)}>→</button>
             </div>
         <div>
-        Pag. {props.paginado+1}    
+        <span> Pag. {props.paginado+1} Total pokemons:{auxPokemons.length>0?
+                auxPokemons.length===1?auxPokemons[0].name==='no hay match'&&'0':auxPokemons.length
+                :Pokemons.length===1?Pokemons[0].name==='no hay match'&&'0':Pokemons.length} 
+              
+        </span>     
         </div>    
         </div>
 

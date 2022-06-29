@@ -10,17 +10,17 @@ export default function Ordenar(props){
    
     
     return(
-        <div>
-            <div>
-                <button className='btn'onClick={()=>{dispatch(ordenarAlfabeticamente
+        <div >
+            <div >
+                <button className='btn'style={{padding:'1px'}}onClick={()=>{dispatch(ordenarAlfabeticamente
                 (props.arrObj,props.arrObjaux,'name'))
             }} >A-z</button>
-                    <button className='btn'onClick={()=>{dispatch(ordenarAlfabeticamente
+                    <button className='btn'style={{padding:'1px'}}onClick={()=>{dispatch(ordenarAlfabeticamente
                 (props.arrObj,props.arrObjaux,'name',true))
             }} >Z-a</button>
-                <button className='btn'onClick={()=>dispatch(ordenarNumero
+                <button className='btn'style={{padding:'1px'}}onClick={()=>dispatch(ordenarNumero
                     (props.arrObj,props.arrObjaux,'hp',true))}>Max-hp</button>
-                <button className='btn'onClick={()=>dispatch(ordenarNumero
+                <button className='btn'style={{padding:'1px'}}onClick={()=>dispatch(ordenarNumero
                     (props.arrObj,props.arrObjaux,'hp'))}>Min-hp</button>
             </div>
         </div>

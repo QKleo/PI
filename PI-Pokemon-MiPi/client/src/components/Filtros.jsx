@@ -9,7 +9,7 @@ export default function Filtros(props){
    
     const dispatch=useDispatch()
     let namesMostra
-    
+    const Allpokemons=useSelector(state=>state.Allpokemons)
     const Pokemons=useSelector(state=>state.Pokemons)
     const Types=useSelector(state=>state.Types)
     const Names=useSelector(state=>state.Names)
@@ -19,8 +19,9 @@ export default function Filtros(props){
         Types:'',
         names:'',
         posibles:'',
+        valida:true,
     })
-    useEffect(()=>{dispatch(limpiarPosibles());return()=>{limpiarEstadoPosibles()}},[])
+    //useEffect(()=>{dispatch(limpiarEstadoPosibles())},[])
   
     if(valores.nombre.length>0){
         namesMostra=Names.filter(e=>e.name.match(valores.nombre.toLowerCase()))
@@ -28,6 +29,20 @@ export default function Filtros(props){
     if(valores.nombre.length===0){
         namesMostra=Names
     }
+    if(valores.Types&&valores.valida){
+        dispatch(typesPosibles(valores.Types))
+        setvalores({...valores,['valida']:false})
+    }
+    if(valores.Types&&Pokemons.length>=1&&valores.valida&&Pokemons[0].name!=='no hay match'){
+        
+        dispatch(filtrarTipo(Pokemons,valores.Types))
+        setvalores({...valores,['valida']:false})
+
+    }
+    // if(Pokemons.length===1&&Pokemons[0].name==='no hay match'&&valores.valida){
+    //     setvalores({...valores,['Types']:''})
+    //     setvalores({...valores,['valida']:false})
+    // }
     function control(str){
         str=str.split('-').join('')
         let primero=/\W/.test(str)
@@ -43,19 +58,22 @@ export default function Filtros(props){
         const{name,value}=e.target
         name==='nombre'&&setvalores({['nombre']:control(value)?value:valores.nombre})
         name==='names'&&setvalores({['nombre']:value})
-        name==='Types'&&setvalores({['Types']:value,['names']:'',['nombre']:''})
+        name==='Types'&&setvalores({['Types']:value,['names']:'',['nombre']:'',['valida']:true})
+        
         name==='posibles'&&setvalores({['nombre']:value})
-            
+       
+
         
     }
+   
    // console.log(valores.Types)
-    function handleOnClick(e){
-        e.preventDefault(e)
-        if(Pokemons.length===1&&Pokemons[0].name==='no hay match'){
+    function handleOnClick(array,value){
+      //  e.preventDefault(e)
+        if(array.length===1&&array[0].name==='no hay match'){
            // return<h4 className="white">no hay</h4>
            console.log('no hay match')
         }else{
-            dispatch(filtrarTipo(Pokemons,valores.Types))
+            dispatch(filtrarTipo(array,value))
 
         }
     }
@@ -88,7 +106,8 @@ export default function Filtros(props){
                     <select name="Types" className="btn" value=''
                         onChange={(e)=>handleOnChange(e)}  id="" >
                         
-                            <option value="">Types</option>
+                            <option value="">Types :{valores.Types&&Pokemons[0].name!=='no hay match'
+                            &&Allpokemons.length!==Pokemons.length?valores.Types:''}</option>
                             {Types.length>0&&Types.map((e)=>{
                             return <option key={e.id }value={e.name}>{e.name}</option>})}
                     
@@ -96,25 +115,26 @@ export default function Filtros(props){
                 </div>
 
                    
-                <button className="btn"
+                {/* <button className="btn"
                     onClick={(e)=>{
                         handleOnClick(e)
                     }}>
                     Filtrar por tipo
-                </button>
-                <div>
+                </button> */}
+                {/* <div>
                     <label htmlFor="" className="btn">su seleccion:{valores.Types?valores.Types:
                     'sin seleccion'}</label>
-                </div>
+                </div> */}
                 <div>
                     <select name='posibles' className="btn" value=''id=""
                         onChange={(e)=>handleOnChange(e)}>
-                        <option value="">Pokemones posibles por type</option>
+                        <option value="">Pokemones posibles por {valores.Types&&Pokemons[0].name!=='no hay match'
+                            &&Allpokemons.length!==Pokemons.length?valores.Types:''}</option>
                         {Posibles.length>0&&Posibles.map((e,i)=>{
                         return <option key={i} value={e}>{e}</option>
                     })}
                 </select> 
-                <button className='btn'onClick={()=> dispatch(typesPosibles(valores.Types))}>O</button>   
+                {/* <button className='btn'onClick={()=> dispatch(typesPosibles(valores.Types))}>O</button>    */}
                 </div>
                 </div>   
             </div>
